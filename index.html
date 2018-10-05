@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="app.css">
+  <script src="js/filter.js" defer></script>
+  <script src="js/sorter.js" defer></script>
+  <script src="js/phone-view.js" defer></script>
+  <script src="js/phones-catalogue.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <div data-component="page-phone-catalogue"
+     class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      <div data-component="filter">
+        <p>
+          Search:
+          <input data-element="filter">
+        </p>
+      </div>
+
+      <div data-component="sorter">
+        <p>
+          Sort by:
+          <select>
+            <option value="name">Alphabetical</option>
+            <option value="age">Newest</option>
+          </select>
+        </p>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+      <div data-component="phones-catalogue"></div>
+
+      <div data-component="phone-view"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
