@@ -172,24 +172,37 @@ class Page {
             element: document.querySelector('[data-component="phone-view"]')
         });
 
+        this._phoneView.hide();
+
         this._phonesCatalogue = new PhonesCatalogue({
             element: document.querySelector('[data-component="phones-catalogue"]'),
             phones
         });
+
+        this._phonesCatalogue.sortPhones('name');
+
         
-        this._phonesCatalogue.getElement().addEventListener('phoneLinkClicked', (event) => {
-            this._hideElement(this._phonesCatalogue.getElement());
-            this._hideElement(this._filter.getElement());
-            this._hideElement(this._sorter.getElement());
-        });
+        this._phonesCatalogue.getElement().addEventListener('phoneSelected', this._onPhoneSelected.bind(this));
 
         this._filter.getElement().addEventListener('phoneFilter', (event) => {
             this._phonesCatalogue.filterData(event.detail);
         });
+
+        this._sorter.getElement().addEventListener('phoneSorter', (event) => {
+            this._phonesCatalogue.sortPhones(event.detail);
+        });
     }
 
-    _hideElement(element) {
-        element.classList.add('js-hidden');
+    _onPhoneSelected(event) {
+        this._phoneView.render(this._getPhoneById(event.detail));
+        this._phoneView.show();
+        this._phonesCatalogue.hide();
+        this._filter.hide();
+        this._sorter.hide();
+    }
+
+    _getPhoneById(phoneId) {
+        return phones.find((phone) => phone.id === phoneId);
     }
 }
 

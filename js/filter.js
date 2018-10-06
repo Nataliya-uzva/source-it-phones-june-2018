@@ -1,21 +1,20 @@
 'use strict';
 
-class Filter {
+class Filter extends BaseComponent {
     constructor(options) {
-        this._el = options.element;
+        super(options);
 
-        this._filter = this._el.querySelector('[data-element="filter"]');
+        const filterElement = this._el.querySelector('[data-element="filter"]');
 
-        this._filter.addEventListener('input', (event) => {
+        filterElement.addEventListener('input', (event) => {
 
             let phoneFilter = new CustomEvent('phoneFilter', {
                 detail: event.target.value
             });
+
             this._el.dispatchEvent(phoneFilter);
 
         });
     }
-    getElement() {
-        return this._el;
-    }
+
 }

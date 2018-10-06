@@ -1,11 +1,18 @@
 'use strict';
 
-class PhonesCatalogue {
+let template = document.querySelector('[data-template="phones-catalogue"]').innerHTML;
+let compiledTemplateCatalogue = _.template(template);
+
+const SORT_TYPE_ALPHABETICAL = 'name';
+const SORT_TYPE_NEWEST = 'age';
+
+class PhonesCatalogue extends BaseComponent {
     constructor(options) {
-        this._el = options.element;
+
+        super(options);
 
         this._defaultPhones = options.phones;
-        this._render(options.phones);
+        this.render(options.phones);
         
         this._el.addEventListener('click', (event) => {
             if (!event.target.closest('[data-element="phoneLink"]')) {
@@ -13,16 +20,13 @@ class PhonesCatalogue {
             }
             event.preventDefault();
 
-            var linkClicked = new CustomEvent('phoneLinkClicked', {
-                detail: 'phoneId'
+            const phoneId = event.target.closest('[data-element="phoneId"]').dataset.id;
+            let phoneSelected = new CustomEvent('phoneSelected', {
+                detail: phoneId
             });
 
-            this._el.dispatchEvent(linkClicked);
+            this._el.dispatchEvent(phoneSelected);
         })
-    }
-
-    getElement() {
-        return this._el;
     }
 
     filterData(query) {
@@ -30,27 +34,39 @@ class PhonesCatalogue {
         const filterPhones = this._defaultPhones
             .filter((phone) => {
                 return phone.name.toLocaleLowerCase().includes(formQuery);
-            })
+            });
 
-        this._render(filterPhones);
+        this.render(filterPhones);
     }
-    _render(phones) {
-      let template = '<ul class="phones">';
 
-      phones.forEach((phone) => {
-        template += `
-        <li class="thumbnail">
-            <a href="phones/${phone.id}" data-element="phoneLink" class="thumb">
-                <img alt="${phone.name}" src="${phone.imageUrl}">
-            </a>
-            <a href="phones/${phone.id}" data-element="phoneLink">${phone.name}</a>
-            <p>${phone.snippet}</p>
-        </li>
-        `
-      });
+    sortPhones(type) {
+        
+        console.log(type);
+        if (type === SORT_TYPE_ALPHABETICAL) {
+            this.render(this._alphaPhones());
+        }
 
-      template += '</ul>';
+        if (type === SORT_TYPE_NEWEST) {
+            this.render(this._newPhones());
+        }
+    }
 
-      this._el.innerHTML = template;
+    render(phones) {
+        this._el.innerHTML = compiledTemplateCatalogue({ phones });
+    }
+
+    _alphaPhones() {
+        
+        return this._defaultPhones.sort((phone1, phone2) => {
+            if (phone1['name'] > phone2['name']) return 1;
+            if (phone1['name'] < phone2['name']) return -1;
+        });
+    }
+
+    _newPhones() {
+        return this._defaultPhones.sort((phone1, phone2) => {
+            if (phone1['age'] > phone2['age']) return 1;
+            if (phone1['age'] < phone2['age']) return -1;
+        });
     }
 }

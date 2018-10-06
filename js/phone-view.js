@@ -1,11 +1,14 @@
 'use strict';
 
-class PhoneView {
+const viewTemplate = document.querySelector('[data-template="phone-view"]').innerHTML;
+let compiledTemplate = _.template(viewTemplate);
+
+class PhoneView extends BaseComponent {
     constructor(options) {
-        this._el = options.element;
+        super(options);
     }
 
-    getElement() {
-        return this._el;
+    render(phoneDetails) {
+        this._el.innerHTML = compiledTemplate(phoneDetails);
     }
 }
