@@ -1,4 +1,4 @@
-const API_URL = 'https://mgrinko.github.io/js-20180614/api/'
+const API_URL = 'https://Nataliya-uzva.github.io/source-it-phones-june-2018/api/';
 const API_URL = '/api/';
 
 const HttpService = {
