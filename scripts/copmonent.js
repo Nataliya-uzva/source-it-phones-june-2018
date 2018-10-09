@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const HIDDEN_CLASS = 'js-hidden';
 
@@ -25,7 +25,7 @@ export default class Component {
 
     on(eventName, selector, callback) {
         if (!callback) {
-            callback = selector
+            callback = selector;
             this._element.addEventListener(eventName, callback);
 
             return;

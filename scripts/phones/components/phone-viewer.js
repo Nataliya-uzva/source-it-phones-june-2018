@@ -1,6 +1,6 @@
 'use strict'
 
-import Component from '../../component.js';
+import Component from '../../copmonent.js';
 
 export default class PhoneViewer extends Component {
 
