@@ -4,18 +4,18 @@ import Component from '../../copmonent.js';
 
 export default class PhoneCatalog extends Component {
     constructor({ element }) {
-        super({ element })
+        super({ element });
 
         this.on('click', '[data-element="phone-link"]', (event) => {
             let phoneLink = event.delegateTarget;
-            let phoneElement = phoneLink.closest('[data-element="phone"]')
+            let phoneElement = phoneLink.closest('[data-element="phone"]');
 
             this._trigger('phoneSelected', phoneElement.dataset.phoneId);
         });
 
         this.on('click', '[data-element="button-add"]', (event) => {
             let addButton = event.delegateTarget;
-            let phoneElement = addButton.closest('[data-element="phone"]')
+            let phoneElement = addButton.closest('[data-element="phone"]');
 
             this._trigger('addToShoppingCart', phoneElement.dataset.phoneId);
         });

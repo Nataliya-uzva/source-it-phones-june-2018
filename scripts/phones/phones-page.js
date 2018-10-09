@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import PhoneCatalog from './components/phone-catalog.js';
 import PhoneViewer from './components/phone-viewer.js';
@@ -9,6 +9,11 @@ import PhoneService from '../services/phone-service.js';
 export default class PhonesPage {
     constructor({ element }) {
         this._element = element;
+
+        this._filter = {
+            query: '',
+            order: 'name',
+        };
 
         this._render();
 
@@ -26,25 +31,17 @@ export default class PhonesPage {
         PhoneService.getAll()
             .then((phones) => {
                 this._catalog.showPhones(phones)
-            })
+            });
 
         this._catalog.on('phoneSelected', (event) => {
             let phoneId = event.detail;
 
-            let phonePromise = PhoneService.get(phoneId);
-            let clickPromise = new Promise((resolve) => {
-                document.oncontextmenu = () => {
-                    resolve()
-                }
-            });
-
-            clickPromise
-                .then(() => phonePromise)
-                // Promise.all([phonePromise, clickPromise])
+            PhoneService.get(phoneId)
                 .then((phone) => {
                     this._catalog.hide();
+                    this._filter.hide();
                     this._viewer.showPhone(phone);
-                })
+                });
         });
 
         this._catalog.on('addToShoppingCart', (event) => {
@@ -62,6 +59,7 @@ export default class PhonesPage {
         this._viewer.on('back', () => {
             this._viewer.hide();
             this._catalog.show();
+            this._filter.show();
         });
 
         this._viewer.on('add', (event) => {
@@ -80,7 +78,23 @@ export default class PhonesPage {
     _initFilters() {
         this._filter = new PhonesFilter({
             element: this._element.querySelector('[data-component="phones-filter"]'),
-        })
+        });
+
+        this._filter.on('changeOrder', (event) => {
+            this._filter.order = event.detail;
+            PhoneService.getAll({orderField: event.detail})
+                .then((phones) => {
+                    this._catalog.showPhones(phones);
+                });
+        });
+
+        this._filter.on('search', (event) => {
+            this._filter.query = event.detail;
+            PhoneService.getAll({query: event.detail})
+                .then((phones) => {
+                    this._catalog.showPhones(phones);
+                });
+        });
     }
 
     _render() {
@@ -89,7 +103,7 @@ export default class PhonesPage {
         <div class="row">
       
           <!--Sidebar-->
-          <div class="col-md-2">
+          <div class="col-md-3">
             <section>
               <div data-component="phones-filter"></div>
             </section>
@@ -100,7 +114,7 @@ export default class PhonesPage {
           </div>
       
           <!--Main content-->
-          <div class="col-md-10">
+          <div class="col-md-9">
             <div data-component="phone-catalog"></div>
             <div data-component="phone-viewer" class="js-hidden"></div>
           </div>

@@ -46,6 +46,7 @@ export default class ShoppingCart extends Component {
           <li>
             ${ item } (${ this._items[item] })
             <button
+            class="btn btn-danger custom-remove-button"
               data-element="button-remove"
               data-item="${ item }"
             >

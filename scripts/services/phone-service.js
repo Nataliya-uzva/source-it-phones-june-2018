@@ -19,11 +19,23 @@ const PhoneService = {
 
 
     _filter(phones, query) {
-        return phones;
+        if (!query) {
+            return phones;
+        }
+
+        let normalizedQuery = query.toLowerCase();
+
+        return phones.filter((phone) => {
+            return phone.name.toLowerCase().includes(normalizedQuery);
+        });
     },
 
     _sort(phones, orderField) {
-        return phones;
+        return phones.sort((phoneA, phoneB) => {
+            return (phoneA[orderField] > phoneB[orderField])
+                ? 1
+                : -1;
+        });
     }
 };
 
