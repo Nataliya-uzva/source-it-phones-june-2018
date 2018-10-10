@@ -1,9 +1,18 @@
 /* app css stylesheet */
 
-body {
-  padding-top: 20px;
+.js-hidden {
+  display: none;
 }
 
+.custom-remove-button {
+  font-size: 8px;
+  margin: 6px;
+}
+
+body {
+  padding-top: 20px;
+  background-color: lightcyan;
+}
 
 .phone-images {
   background-color: white;
@@ -24,6 +33,14 @@ body {
   padding-bottom: 1em;
   height: 100px;
   width: 100px;
+}
+
+.phones__btn-buy-wrapper {
+  align-items: center;
+  float: right;
+  height: 100%;
+  display: flex;
+  margin: 0 1em;
 }
 
 .phones li {
@@ -96,8 +113,4 @@ ul.specs dt {
 
 h1 {
   border-bottom: 1px solid gray;
-}
-
-.js-hidden {
-  display: none;
 }

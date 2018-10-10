@@ -1,0 +1,22 @@
+{
+  "name": "source-it-phones-06-2018",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nataliya-uzva/source-it-phones-june-2018.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nataliya-uzva/source-it-phones-june-2018/issues"
+  },
+  "homepage": "https://github.com/Nataliya-uzva/source-it-phones-june-2018#readme",
+  "devDependencies": {
+    "node-static": "^0.7.10"
+  }
+}
