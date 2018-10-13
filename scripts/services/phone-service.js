@@ -23,10 +23,10 @@ const PhoneService = {
             return phones;
         }
 
-        let normalizedQuery = query.toLowerCase();
+        let normalizedQuery = query.toLocaleLowerCase();
 
         return phones.filter((phone) => {
-            return phone.name.toLowerCase().includes(normalizedQuery);
+            return phone.name.toLocaleLowerCase().includes(normalizedQuery);
         });
     },
 

@@ -8,11 +8,11 @@ export default class Component {
     }
 
     show() {
-        this._element.classList.remove(HIDDEN_CLASS)
+        this._element.classList.remove(HIDDEN_CLASS);
     }
 
     hide() {
-        this._element.classList.add(HIDDEN_CLASS)
+        this._element.classList.add(HIDDEN_CLASS);
     }
 
     _trigger(eventName, data) {

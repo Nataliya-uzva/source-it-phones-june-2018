@@ -19,6 +19,7 @@ export default class PhonesPage {
 
         this._initCatalog();
         this._initViewer();
+        this._viewer.hide();
         this._initShoppingCart();
         this._initFilters();
     }
@@ -28,9 +29,9 @@ export default class PhonesPage {
             element: this._element.querySelector('[data-component="phone-catalog"]'),
         });
 
-        PhoneService.getAll()
+        PhoneService.getAll(this._filter)
             .then((phones) => {
-                this._catalog.showPhones(phones)
+                this._catalog.showPhones(phones);
             });
 
         this._catalog.on('phoneSelected', (event) => {
@@ -82,7 +83,7 @@ export default class PhonesPage {
 
         this._filter.on('changeOrder', (event) => {
             this._filter.order = event.detail;
-            PhoneService.getAll({orderField: event.detail})
+            PhoneService.getAll(this._filter)
                 .then((phones) => {
                     this._catalog.showPhones(phones);
                 });
@@ -90,7 +91,7 @@ export default class PhonesPage {
 
         this._filter.on('search', (event) => {
             this._filter.query = event.detail;
-            PhoneService.getAll({query: event.detail})
+            PhoneService.getAll(this._filter)
                 .then((phones) => {
                     this._catalog.showPhones(phones);
                 });
@@ -116,7 +117,7 @@ export default class PhonesPage {
           <!--Main content-->
           <div class="col-md-9">
             <div data-component="phone-catalog"></div>
-            <div data-component="phone-viewer" class="js-hidden"></div>
+            <div data-component="phone-viewer"></div>
           </div>
         </div>
       </div>
